@@ -322,13 +322,13 @@ $(document).ready(function(){
       return;
     }
     const mensaje = encodeURIComponent("Aquí está tu link: " + linkGenerado);
-    window.open("https://andy1125e.github.io/Validaciones/Registro_empleado.html", "_blank");
+    window.open("https://wa.me/" + numero + "?text=" + mensaje, "_blank");
     $("#modal").fadeOut();
   });
 
   // Enviar Presencial
   $(".btn-presencial").click(function(){
-    window.location.href = linkGenerado;
+    //window.location.href =   //linkGenerado;
     $("#modal").fadeOut();
   });
 
