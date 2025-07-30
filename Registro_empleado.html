@@ -190,25 +190,26 @@
       </div>
 
       <!-- Paso 3 -->
-      <div class="step" id="step3">
+       <div class="step" id="step3">
         <img src="paso_3.png" alt="Ayuda foto personal" class="help-img" />
         <label for="foto">FOTO PERSONAL</label>
-        <label class="file-label" for="foto">TOMAR UNA FOTO</label>
+        <label class="file-label" for="foto">TOMAR FOTO</label>
         <input
           class="file-input"
           type="file"
           id="foto"
           name="foto"
           accept="image/*"
-          capture="user"
+          capture="user" 
         />
-        <span class="file-name" id="foto-nombre">Ningún archivo seleccionado</span>
-        <img id="foto-preview" class="preview-img" alt="Vista previa foto personal" style="display:none;" />
-        <div class="buttons">
-          <button type="button" id="btnAnterior3">Anterior</button>
-          <button type="button" id="btnSiguiente3" disabled>Siguiente</button>
-        </div>
+      <span class="file-name" id="foto-nombre">Ningún archivo seleccionado</span>
+      <img id="foto-preview" class="preview-img" alt="Vista previa foto personal" style="display:none;" />
+      <div class="buttons">
+      <button type="button" id="btnAnterior3">Anterior</button>
+      <button type="button" id="btnSiguiente3" disabled>Siguiente</button>
       </div>
+    </div>
+
 
       <!-- Paso 4.1 -->
       <div class="step" id="step4-1">
@@ -249,7 +250,7 @@
   </div>
 
 <script>
-  const steps = ["step1", "step2", "step3", "step4-1", "step4-2"];
+  const steps = ["step1", "step2", "step3", "step4-1", "step4-2", "step5",];
   let currentStepIndex = 0;
 
   const btnSiguiente1 = document.getElementById("btnSiguiente1");
@@ -324,15 +325,19 @@
     actualizarBotones();
   });
 
-  fotoInput.addEventListener("change", function() {
+  fotoInput.addEventListener("change", function () {
     if (this.files && this.files[0]) {
-      fotoNombre.textContent = this.files[0].name;
-      const reader = new FileReader();
-      reader.onload = function(e) {
+      const archivo = this.files[0];
+
+      fotoNombre.textContent = archivo.name;
+
+      const lector = new FileReader();
+      lector.onload = function (e) {
         fotoPreview.src = e.target.result;
         fotoPreview.style.display = "block";
       };
-      reader.readAsDataURL(this.files[0]);
+      lector.readAsDataURL(archivo);
+
       btnSiguiente3.disabled = false;
     } else {
       fotoNombre.textContent = "Ningún archivo seleccionado";
