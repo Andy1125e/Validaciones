@@ -321,8 +321,8 @@ $(document).ready(function(){
       alert("Por favor ingresa un número válido con al menos 10 dígitos y sin caracteres especiales.");
       return;
     }
-    const mensaje = encodeURIComponent("Aquí está tu link: " + /*linkGenerado*/ "https://andy1125e.github.io/Validaciones/Registro_empleado.html");
-    //window.open(/*"https://wa.me/" + numero + "?text=" + mensaje*/linkGenerado, "_blank");
+    const mensaje = encodeURIComponent("Aquí está tu link: " + linkGenerado);
+    window.open("https://andy1125e.github.io/Validaciones/Registro_empleado.html", "_blank");
     $("#modal").fadeOut();
   });
 
