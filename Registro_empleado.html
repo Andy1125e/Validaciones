@@ -63,6 +63,16 @@
       display: block;
     }
 
+    img.fin-img {
+      width: 90%;
+      max-width: 1000px;
+      height: auto;  
+      border-radius: 50px;
+      margin-bottom: 150px;
+      object-fit: cover;
+      display: block;
+    }
+
     label {
       display: block;
       margin-bottom: 15px;
@@ -237,7 +247,7 @@
       <div class="step" id="step5">
         <img src="FIN.png" alt="final" class="help-img"/>
         <label>PUEDES DESCARGAR TU GAFETE</label>
-        <img src="ACEESO.png" alt="final" class="help-img"/>
+        <img src="ACCESO.png" alt="acreditacion" class="fin-img"/>
         <button id="btnDescargarPDF">Descargar PDF</button>
       </div>
     </form>
@@ -382,16 +392,17 @@
       mostrarPaso(5);
       actualizarBotones();
     } else {
-      alert("Por favor completa todos los campos requeridos correctamente.");
+      
     }
   });
   document.getElementById("btnDescargarPDF").addEventListener("click", function () {
-  const link = document.createElement('a');
-  link.href = 'ACCESO.pdf'; 
-  link.download = 'gafete.pdf';     
-  link.click();
-  document.body.removeChild(link);
-});
+    const link = document.createElement('a');
+    link.href = 'ACCESO.pdf'; 
+    link.download = 'gafete.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
 
   //document.getElementById("btnDescargarPDF").addEventListener("click", function () {
    // window.open('ACCESO.pdf', '_blank'); 
