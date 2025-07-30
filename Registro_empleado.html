@@ -244,13 +244,16 @@
         <img src="FIN.png" alt="final" class="help-img"/>
         <label>PUEDES DESCARGAR TU GAFETE</label>
         <img src="ACCESO.png" alt="final" class="fin-img"/>
-        <button id="btnDescargarPDF">Descargar PDF</button>
+        <div class="buttons">
+          <button id="btnDescargarPDF"> Descargar PDF</button>
+        </div>
+        
       </div>
     </form>
   </div>
 
 <script>
-  const steps = ["step1", "step2", "step3", "step4-1", "step4-2", "step5",];
+  const steps = ["step1", "step2", "step3", "step4-1", "step4-2", "step5"];
   let currentStepIndex = 0;
 
   const btnSiguiente1 = document.getElementById("btnSiguiente1");
@@ -391,7 +394,7 @@
       ineFrenteNombre.textContent = "Ningún archivo seleccionado";
       ineReversoPreview.style.display = "none";
       ineReversoNombre.textContent = "Ningún archivo seleccionado";
-      mostrarPaso(0);
+      mostrarPaso(5);
       actualizarBotones();
     } else {
       
