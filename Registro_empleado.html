@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registro empleado</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #003561;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      padding: 100px;
+      border-radius: 100px;
+      width: 100%;
+      max-width: 900px;
+      min-height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin: 0 auto; 
+    }
+
+    form {
+      width: 450%;
+      max-width: 600px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .step {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .step.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    img.help-img {
+      width: 115%;
+      max-width: 1000px;
+      height: auto;  
+      border-radius: 50px;
+      margin-bottom: 150px;
+      object-fit: cover;
+      display: block;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 15px;
+      font-weight: bold;
+      color: #ffffff;
+      text-align: center;
+      font-size: 50px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="file"] {
+      width: 150%;
+      padding: 15px;
+      margin-bottom: 70px;
+      border-radius: 16px;
+      border: 10px solid #ffffff;
+      font-size: 50px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .file-label {
+      display: inline-block;
+      background-color: #A3C60A;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 70px;
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    .file-name {
+      font-size: 40px;
+      color: #555;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .preview-img {
+      width: 90%;          
+      max-width: 350px;     
+      height: auto;         
+      border-radius: 8px;
+      margin-bottom: 20px;
+      object-fit: cover;    
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .buttons {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    .buttons button {
+      color: #003561;
+      flex: 1;
+      max-width: 400px;
+      padding: 20px 20px;
+      font-size: 60px;
+      background-color: #ffffff; 
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      text-align: center;
+    }
+
+    button:disabled {
+      background-color: #959697;
+      cursor: not-allowed;
+    }
+
+    #btnEnviar {
+      width: 60%;
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <form id="formulario" enctype="multipart/form-data" novalidate>
+
+      <!-- Paso 1 -->
+      <div class="step active" id="step1">
+        <img src="paso_1.png" alt="Ayuda nombre" class="help-img" />
+        <label for="nombre">NOMBRE Y APELLIDOS</label>
+        <input type="text" id="nombre" name="nombre" autocomplete="off" />
+        <div class="buttons">
+          <button type="button" id="btnSiguiente1" disabled>Siguiente</button>
+        </div>
+      </div>
+
+      <!-- Paso 2 -->
+      <div class="step" id="step2">
+        <img src="paso_2.png" alt="Ayuda celular" class="help-img" />
+        <label for="celular">NÚMERO DE CELULAR</label>
+        <input type="tel" id="celular" name="celular" maxlength="10" autocomplete="off" pattern="[0-9]{10}" />
+        <div class="buttons">
+          <button type="button" id="btnAnterior2">Anterior</button>
+          <button type="button" id="btnSiguiente2" disabled>Siguiente</button>
+        </div>
+      </div>
+
+      <!-- Paso 3 -->
+      <div class="step" id="step3">
+        <img src="paso_3.png" alt="Ayuda foto personal" class="help-img" />
+        <label for="foto">FOTO PERSONAL</label>
+        <label class="file-label" for="foto">TOMAR FOTO</label>
+        <input class="file-input" type="file" id="foto" name="foto" accept="image/*" />
+        <span class="file-name" id="foto-nombre">Ningún archivo seleccionado</span>
+        <img id="foto-preview" class="preview-img" alt="Vista previa foto personal" style="display:none;" />
+        <div class="buttons">
+          <button type="button" id="btnAnterior3">Anterior</button>
+          <button type="button" id="btnSiguiente3" disabled>Siguiente</button>
+        </div>
+      </div>
+
+      <!-- Paso 4.1 -->
+      <div class="step" id="step4-1">
+        <img src="paso_4_1.png" alt="Ayuda INE Frente" class="help-img" />
+        <label for="ineFrente">FOTO DE LA INE (Frente)</label>
+        <label class="file-label" for="ineFrente">Elegir archivo</label>
+        <input class="file-input" type="file" id="ineFrente" name="ineFrente" accept="image/*" />
+        <span class="file-name" id="ineFrente-nombre">Ningún archivo seleccionado</span>
+        <img id="ineFrente-preview" class="preview-img" alt="Vista previa INE frente" style="display:none;" />
+        <div class="buttons">
+          <button type="button" id="btnAnterior3">Anterior</button>
+          <button type="button" id="btnSiguiente4-1" disabled>Siguiente</button>
+        </div>
+      </div>
+
+      <!-- Paso 4.2 -->
+      <div class="step" id="step4-2">
+        <img src="paso_4_2.png" alt="Ayuda INE Reverso" class="help-img" />
+        <label for="ineReverso">FOTO DE LA INE (Reverso)</label>
+        <label class="file-label" for="ineReverso">Elegir archivo</label>
+        <input class="file-input" type="file" id="ineReverso" name="ineReverso" accept="image/*" />
+        <span class="file-name" id="ineReverso-nombre">Ningún archivo seleccionado</span>
+        <img id="ineReverso-preview" class="preview-img" alt="Vista previa INE reverso" style="display:none;" />
+        <div class="buttons">
+          <button type="button" id="btnAnterior4-2">Anterior</button>
+          <button type="submit" id="btnEnviar" disabled>Enviar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+<script>
+  const steps = ["step1", "step2", "step3", "step4-1", "step4-2"];
+  let currentStepIndex = 0;
+
+  const btnSiguiente1 = document.getElementById("btnSiguiente1");
+  const btnSiguiente2 = document.getElementById("btnSiguiente2");
+  const btnSiguiente3 = document.getElementById("btnSiguiente3");
+  const btnSiguiente4_1 = document.getElementById("btnSiguiente4-1");
+  const btnAnterior2 = document.getElementById("btnAnterior2");
+  const btnAnterior3 = document.getElementById("btnAnterior3");
+  const btnAnterior4_2 = document.getElementById("btnAnterior4-2");
+  const btnEnviar = document.getElementById("btnEnviar");
+
+  const nombreInput = document.getElementById("nombre");
+  const celularInput = document.getElementById("celular");
+  const fotoInput = document.getElementById("foto");
+  const fotoNombre = document.getElementById("foto-nombre");
+  const fotoPreview = document.getElementById("foto-preview");
+  const ineFrenteInput = document.getElementById("ineFrente");
+  const ineFrenteNombre = document.getElementById("ineFrente-nombre");
+  const ineFrentePreview = document.getElementById("ineFrente-preview");
+  const ineReversoInput = document.getElementById("ineReverso");
+  const ineReversoNombre = document.getElementById("ineReverso-nombre");
+  const ineReversoPreview = document.getElementById("ineReverso-preview");
+
+  function mostrarPaso(index) {
+    steps.forEach((id, i) => {
+      document.getElementById(id).classList.toggle("active", i === index);
+    });
+    currentStepIndex = index;
+    actualizarBotones();
+  }
+
+  function validarNombre() {
+    const val = nombreInput.value.trim();
+    return val.length > 0 && (val.split(" ").filter(P=> P !== "").length >= 3);
+  }
+
+  function validarCelular() {
+    const val = celularInput.value.trim();
+    return /^[0-9]{10}$/.test(val);
+  }
+
+  function validarFoto() {
+    return fotoInput.files.length > 0;
+  }
+
+  function validarIneFrente() {
+    return ineFrenteInput.files.length > 0;
+  }
+
+  function validarIneReverso() {
+    return ineReversoInput.files.length > 0;
+  }
+
+  function actualizarBotones() {
+    btnSiguiente1.disabled = !validarNombre();
+    btnSiguiente2.disabled = !validarCelular();
+    btnSiguiente3.disabled = !validarFoto();
+    btnSiguiente4_1.disabled = !validarIneFrente();
+
+    if (validarIneReverso()) {
+      btnEnviar.disabled = false;
+      btnEnviar.style.display = "inline-block";
+    } else {
+      btnEnviar.disabled = true;
+      btnEnviar.style.display = "none";
+    }
+  }
+
+  nombreInput.addEventListener("input", actualizarBotones);
+  celularInput.addEventListener("input", () => {
+    celularInput.value = celularInput.value.replace(/\D/g, "");
+    actualizarBotones();
+  });
+
+  fotoInput.addEventListener("change", function() {
+    fotoNombre.textContent = this.files.length > 0 ? this.files[0].name : "Ningún archivo seleccionado";
+    mostrarVistaPrevia(this, fotoPreview);
+    actualizarBotones();
+  });
+
+  ineFrenteInput.addEventListener("change", function() {
+    ineFrenteNombre.textContent = this.files.length > 0 ? this.files[0].name : "Ningún archivo seleccionado";
+    mostrarVistaPrevia(this, ineFrentePreview);
+    actualizarBotones();
+  });
+
+  ineReversoInput.addEventListener("change", function() {
+    ineReversoNombre.textContent = this.files.length > 0 ? this.files[0].name : "Ningún archivo seleccionado";
+    mostrarVistaPrevia(this, ineReversoPreview);
+    actualizarBotones();
+  });
+
+  btnSiguiente1.addEventListener("click", () => { if (validarNombre()) mostrarPaso(1); });
+  btnAnterior2.addEventListener("click", () => mostrarPaso(0));
+  btnSiguiente2.addEventListener("click", () => { if (validarCelular()) mostrarPaso(2); });
+  btnAnterior3.addEventListener("click", () => mostrarPaso(1));
+  btnSiguiente3.addEventListener("click", () => { if (validarFoto()) mostrarPaso(3); });
+  btnSiguiente4_1.addEventListener("click", () => { if (validarIneFrente()) mostrarPaso(4); });
+  btnAnterior4_2.addEventListener("click", () => mostrarPaso(3));
+
+  function mostrarVistaPrevia(input, imgElement) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        imgElement.src = e.target.result;
+        imgElement.style.display = "block";
+      }
+      reader.readAsDataURL(input.files[0]);
+    } else {
+      imgElement.style.display = "none";
+      imgElement.src = "";
+    }
+  }
+
+  nombreInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && validarNombre()) {
+      e.preventDefault();
+      mostrarPaso(1);
+    }
+  });
+
+  document.getElementById("formulario").addEventListener("submit", function(e) {
+    e.preventDefault();
+    if (validarNombre() && validarCelular() && validarFoto() && validarIneFrente() && validarIneReverso()) {
+      alert("Datos enviados correctamente (simulado)");
+      this.reset();
+      fotoPreview.style.display = "none";
+      fotoNombre.textContent = "Ningún archivo seleccionado";
+      ineFrentePreview.style.display = "none";
+      ineFrenteNombre.textContent = "Ningún archivo seleccionado";
+      ineReversoPreview.style.display = "none";
+      ineReversoNombre.textContent = "Ningún archivo seleccionado";
+      mostrarPaso(0);
+      actualizarBotones();
+    } else {
+      alert("Por favor completa todos los campos requeridos correctamente.");
+    }
+  });
+
+  const esMovil = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (esMovil) {
+    fotoInput.setAttribute("capture", "user");
+    ineFrenteInput.setAttribute("capture", "environment");
+    ineReversoInput.setAttribute("capture", "environment");
+  }
+
+  actualizarBotones();
+</script>
+</body>
+</html>
