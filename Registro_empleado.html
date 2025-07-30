@@ -385,10 +385,17 @@
       alert("Por favor completa todos los campos requeridos correctamente.");
     }
   });
-
   document.getElementById("btnDescargarPDF").addEventListener("click", function () {
-    window.open('ACCESO.pdf', '_blank'); 
-  });
+  const link = document.createElement('a');
+  link.href = 'ACCESO.pdf'; 
+  link.download = 'gafete.pdf';     
+  link.click();
+  document.body.removeChild(link);
+});
+
+  //document.getElementById("btnDescargarPDF").addEventListener("click", function () {
+   // window.open('ACCESO.pdf', '_blank'); 
+  //});
 
   const esMovil = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   if (esMovil) {
