@@ -206,8 +206,7 @@
         <img src="paso_3.png" alt="Ayuda foto personal" class="help-img" />
         <label for="foto">FOTO PERSONAL</label>
         <label class="file-label" for="foto">TOMAR FOTO</label>
-        <input type="file" id="foto" accept="image/*" capture="user">
-        <!--<input class="file-input" type="file" id="foto" name="foto" accept="image/*" />-->
+        <input class="file-input" type="file" id="foto" accept="image/*" capture="user">
         <span class="file-name" id="foto-nombre">Ningún archivo seleccionado</span>
         <img id="foto-preview" class="preview-img" alt="Vista previa foto personal" style="display:none;" />
         <div class="buttons">
@@ -403,7 +402,7 @@
     // Abrir en nueva pestaña (visualización)
     window.open(pdfUrl, '_blank');
 
-    // descarga
+    // Forzar descarga
     const link = document.createElement('a');
     link.href = pdfUrl;
     link.download = 'gafete.pdf';
