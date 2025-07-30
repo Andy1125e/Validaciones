@@ -389,10 +389,22 @@
   }
 
   actualizarBotones();
+  
+    /*const link = document.createElement('a');
+    link.href = 'ACCESO.pdf'; 
+    link.download = 'gafete.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });*/
 
-  // Botón descargar PDF en step5
+  //document.getElementById("btnDescargarPDF").addEventListener("click", function () {
+   // window.open('ACCESO.pdf', '_blank'); 
+  //});
+
+  // Botón descargar PDF 
   document.getElementById("btnDescargarPDF").addEventListener("click", function () {
-    const pdfUrl = 'gafete.pdf'; // Cambia esta ruta si tu archivo está en otra carpeta
+    const pdfUrl = 'ACCESO.pdf'; 
 
     // Abrir en nueva pestaña para ver
     window.open(pdfUrl, '_blank');
