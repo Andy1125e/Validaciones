@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Perfil Locatario</title>
   <style>
-    
     body {
       font-family: sans-serif;
       padding: 20px;
@@ -127,27 +126,12 @@
       cursor: pointer;
       font-size: 14px;
     }
-    .btn-whatsapp { 
-    background-color: #25D366; 
-    color: white; 
-    }
-
-    .btn-presencial { 
-    background-color: #007bff; 
-    color: white; 
-    }
-
-    .btn-oficina { 
-    background-color: #ffc107; 
-    color: black; 
-    }
-
-    .btn-cancelar { 
-    background-color: #dc3545; 
-    color: white; 
-    }
+    .btn-whatsapp { background-color: #25D366; color: white; }
+    .btn-presencial { background-color: #007bff; color: white; }
+    .btn-oficina { background-color: #ffc107; color: black; }
+    .btn-cancelar { background-color: #dc3545; color: white; }
     
-    #codigo-oficina {
+    #codigo-oficina, #whatsapp-container {
       margin-top: 10px;
       display: none;
     }
@@ -164,10 +148,6 @@
       cursor: pointer;
       width: 100%;
     }
-    #whatsapp-container {
-      margin-top: 10px;
-      display: none;
-    }
     #numero-whatsapp {
       width: 100%;
       padding: 8px;
@@ -176,6 +156,15 @@
       border: 1px solid #ccc;
       font-size: 14px;
       box-sizing: border-box;
+    }
+    #link-presencial {
+      display: inline-block;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      margin-top: 10px;
     }
   </style>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -216,9 +205,7 @@
   </div>
 
   <div class="acordeon">
-    <div class="acordeon-titulo">
-      1. Nombre del Empleado ▼
-    </div>
+    <div class="acordeon-titulo">1. Nombre del Empleado ▼</div>
     <div class="acordeon-contenido">
       <img src="HI 1.png" alt="Foto">
       <p><strong>Nombre:</strong> Andrea López</p>
@@ -230,9 +217,7 @@
   </div>
 
   <div class="acordeon">
-    <div class="acordeon-titulo">
-      2. Nombre del Empleado ▼
-    </div>
+    <div class="acordeon-titulo">2. Nombre del Empleado ▼</div>
     <div class="acordeon-contenido">
       <img src="HI 1.png" alt="Foto">
       <p><strong>Nombre:</strong> Andrea López</p>
@@ -243,6 +228,7 @@
     </div>
   </div>
 
+  <!-- Modal principal -->
   <div id="modal" class="modal">
     <div class="modal-contenido">
       <h3>Selecciona método de envío</h3>
@@ -264,82 +250,85 @@
     </div>
   </div>
 
-<script>
-$(document).ready(function(){
-  let tokenGenerado = "";
-  let linkGenerado = "";
+  <!-- Nuevo modal para opción presencial -->
+  <div id="modal-presencial" class="modal">
+    <div class="modal-contenido">
+      <h3>Continúa con el siguiente link</h3>
+      <a id="link-presencial" href="#" target="_blank">Abrir enlace</a>
+      <button id="cerrar-modal-presencial" class="btn-cancelar">Cerrar</button>
+    </div>
+  </div>
 
-  // Acordeón exclusivo: sólo un contenido abierto a la vez
-  $(".acordeon-titulo").click(function(){
-    const contenido = $(this).next(".acordeon-contenido");
+  <script>
+  $(document).ready(function(){
+    let tokenGenerado = "";
+    let linkGenerado = "";
 
-    if(contenido.is(":visible")) {
-      // Si ya está abierto, lo cerramos
-      contenido.slideUp();
-    } else {
-      // Cerramos todos y abrimos el seleccionado
-      $(".acordeon-contenido").slideUp();
-      contenido.slideDown();
-    }
+    $(".acordeon-titulo").click(function(){
+      const contenido = $(this).next(".acordeon-contenido");
+      if(contenido.is(":visible")) {
+        contenido.slideUp();
+      } else {
+        $(".acordeon-contenido").slideUp();
+        contenido.slideDown();
+      }
+    });
+
+    $(".btn-enviar").click(function(){
+      tokenGenerado = Math.random().toString(36).substr(2, 9);
+      linkGenerado = "Registro_empleado.html?token=" + tokenGenerado;
+
+      $("#codigo-oficina").hide();
+      $("#whatsapp-container").hide();
+      $("#numero-whatsapp").val("");
+      $("#modal").fadeIn();
+    });
+
+    $("#cerrar-modal").click(function(){
+      $("#modal").fadeOut();
+    });
+
+    $(".btn-whatsapp").click(function(){
+      $("#whatsapp-container").show();
+      $("#codigo-oficina").hide();
+    });
+
+    $(".btn-oficina").click(function(){
+      $("#codigo-texto").text("Código: " + tokenGenerado.toUpperCase());
+      $("#codigo-oficina").show();
+      $("#whatsapp-container").hide();
+    });
+
+    $("#enviar-whatsapp").click(function(){
+      const numero = $("#numero-whatsapp").val().trim();
+      const soloNumeros = /^\d+$/;
+
+      if(!soloNumeros.test(numero) || numero.length < 10){
+        alert("Por favor ingresa un número válido con al menos 10 dígitos y sin caracteres especiales.");
+        return;
+      }
+
+      const mensaje = encodeURIComponent("Aquí está tu link: " + linkGenerado);
+      window.open("https://wa.me/" + numero + "?text=" + mensaje, "_blank");
+      $("#modal").fadeOut();
+    });
+
+    $(".btn-presencial").click(function(){
+      $("#modal").fadeOut();
+      $("#link-presencial").attr("href", linkGenerado);
+      $("#modal-presencial").fadeIn();
+    });
+
+    $("#cerrar-modal-presencial").click(function(){
+      $("#modal-presencial").fadeOut();
+    });
+
+    $("#copiar-codigo").click(function(){
+      navigator.clipboard.writeText(tokenGenerado.toUpperCase())
+      .then(() => alert("Código copiado al portapapeles"))
+      .catch(() => alert("No se pudo copiar el código"));
+    });
   });
-
-  // Al hacer clic en enviar generamos token y mostramos modal
-  $(".btn-enviar").click(function(){
-    tokenGenerado = Math.random().toString(36).substr(2, 9);
-    linkGenerado = "Registro_empleado.html?token=" + tokenGenerado;
-
-    $("#codigo-oficina").hide();
-    $("#whatsapp-container").hide();
-    $("#numero-whatsapp").val("");
-    $("#modal").fadeIn();
-  });
-
-  // Cerrar modal
-  $("#cerrar-modal").click(function(){
-    $("#modal").fadeOut();
-  });
-
-  // Mostrar WhatsApp
-  $(".btn-whatsapp").click(function(){
-    $("#whatsapp-container").show();
-    $("#codigo-oficina").hide();
-  });
-
-  // Mostrar Oficina
-  $(".btn-oficina").click(function(){
-    $("#codigo-texto").text("Código: " + tokenGenerado.toUpperCase());
-    $("#codigo-oficina").show();
-    $("#whatsapp-container").hide();
-  });
-
-  // Enviar WhatsApp con validación
-  $("#enviar-whatsapp").click(function(){
-    const numero = $("#numero-whatsapp").val().trim();
-    const soloNumeros = /^\d+$/;
-
-    if(!soloNumeros.test(numero) || numero.length < 10){
-      alert("Por favor ingresa un número válido con al menos 10 dígitos y sin caracteres especiales.");
-      return;
-    }
-    const mensaje = encodeURIComponent("Aquí está tu link: " + linkGenerado);
-    window.open("https://wa.me/" + numero + "?text=" + mensaje, "_blank");
-    $("#modal").fadeOut();
-  });
-
-  // Enviar Presencial
-  $(".btn-presencial").click(function(){
-    window.location.href = linkGenerado;
-    $("#modal").fadeOut();
-  });
-
-  // Copiar código
-  $("#copiar-codigo").click(function(){
-    navigator.clipboard.writeText(tokenGenerado.toUpperCase())
-    .then(() => alert("Código copiado al portapapeles"))
-    .catch(() => alert("No se pudo copiar el código"));
-  });
-});
-</script>
-
+  </script>
 </body>
 </html>
