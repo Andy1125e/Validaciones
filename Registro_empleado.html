@@ -381,30 +381,9 @@
       alert("Por favor completa todos los campos requeridos correctamente.");
     }
   });
-
-  const esMovil = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  if (esMovil) {
-    ineFrenteInput.setAttribute("capture", "environment");
-    ineReversoInput.setAttribute("capture", "environment");
-  }
-
-  actualizarBotones();
-  
-    /*const link = document.createElement('a');
-    link.href = 'ACCESO.pdf'; 
-    link.download = 'gafete.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  });*/
-
-  //document.getElementById("btnDescargarPDF").addEventListener("click", function () {
-   // window.open('ACCESO.pdf', '_blank'); 
-  //});
-
-  // Botón descargar PDF 
+    // Botón descargar PDF en step5
   document.getElementById("btnDescargarPDF").addEventListener("click", function () {
-    const pdfUrl = 'ACCESO.pdf'; 
+    const pdfUrl = 'gafete.pdf'; // Cambia esta ruta si tu archivo está en otra carpeta
 
     // Abrir en nueva pestaña para ver
     window.open(pdfUrl, '_blank');
@@ -417,6 +396,16 @@
     link.click();
     document.body.removeChild(link);
   });
+
+  const esMovil = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (esMovil) {
+    ineFrenteInput.setAttribute("capture", "environment");
+    ineReversoInput.setAttribute("capture", "environment");
+  }
+
+  actualizarBotones();
+
+
 </script>
 </body>
 </html>
