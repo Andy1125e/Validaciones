@@ -1,3 +1,4 @@
+<!-- DOCUMENTO HTML COMPLETO -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -152,6 +153,17 @@
       margin-top: 20px;
       display: none;
     }
+
+    #btnDescargarPDF {
+      margin-top: 30px;
+      font-size: 50px;
+      padding: 20px 40px;
+      background-color: #A3C60A;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -202,7 +214,7 @@
         <span class="file-name" id="ineFrente-nombre">Ningún archivo seleccionado</span>
         <img id="ineFrente-preview" class="preview-img" alt="Vista previa INE frente" style="display:none;" />
         <div class="buttons">
-          <button type="button" id="btnAnterior3">Anterior</button>
+          <button type="button" id="btnAnterior4-1">Anterior</button>
           <button type="button" id="btnSiguiente4-1" disabled>Siguiente</button>
         </div>
       </div>
@@ -221,16 +233,18 @@
         </div>
       </div>
 
+      <!-- Paso 5 -->
       <div class="step" id="step5">
         <img src="FIN.png" alt="final" class="help-img"/>
-        <label for="ineReverso">PUESDE DESCARGAR TU GAFET</label>
-
+        <label>PUEDES DESCARGAR TU GAFETE</label>
+        <img src="ACEESO.png" alt="final" class="help-img"/>
+        <button id="btnDescargarPDF">Descargar PDF</button>
       </div>
     </form>
   </div>
 
 <script>
-  const steps = ["step1", "step2", "step3", "step4-1", "step4-2"];
+  const steps = ["step1", "step2", "step3", "step4-1", "step4-2", "step5"];
   let currentStepIndex = 0;
 
   const btnSiguiente1 = document.getElementById("btnSiguiente1");
@@ -239,6 +253,7 @@
   const btnSiguiente4_1 = document.getElementById("btnSiguiente4-1");
   const btnAnterior2 = document.getElementById("btnAnterior2");
   const btnAnterior3 = document.getElementById("btnAnterior3");
+  const btnAnterior4_1 = document.getElementById("btnAnterior4-1");
   const btnAnterior4_2 = document.getElementById("btnAnterior4-2");
   const btnEnviar = document.getElementById("btnEnviar");
 
@@ -328,6 +343,7 @@
   btnSiguiente2.addEventListener("click", () => { if (validarCelular()) mostrarPaso(2); });
   btnAnterior3.addEventListener("click", () => mostrarPaso(1));
   btnSiguiente3.addEventListener("click", () => { if (validarFoto()) mostrarPaso(3); });
+  btnAnterior4_1.addEventListener("click", () => mostrarPaso(2));
   btnSiguiente4_1.addEventListener("click", () => { if (validarIneFrente()) mostrarPaso(4); });
   btnAnterior4_2.addEventListener("click", () => mostrarPaso(3));
 
@@ -363,11 +379,15 @@
       ineFrenteNombre.textContent = "Ningún archivo seleccionado";
       ineReversoPreview.style.display = "none";
       ineReversoNombre.textContent = "Ningún archivo seleccionado";
-      mostrarPaso(0);
+      mostrarPaso(5);
       actualizarBotones();
     } else {
       alert("Por favor completa todos los campos requeridos correctamente.");
     }
+  });
+
+  document.getElementById("btnDescargarPDF").addEventListener("click", function () {
+    window.open('ACCESO.pdf', '_blank'); 
   });
 
   const esMovil = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
